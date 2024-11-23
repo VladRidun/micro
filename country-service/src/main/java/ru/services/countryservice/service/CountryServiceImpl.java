@@ -14,7 +14,7 @@ public class CountryServiceImpl implements CountryService {
     private CountryMapper countryMapper;
 
     @Override
-    public CountryResponseDto getCountry(String code) {
-        return countryMapper.fromEntityToDto(countryRepository.findCountryByCode(code));
+    public CountryResponseDto getCountry(Long id) {
+        return countryMapper.fromEntityToDto(countryRepository.findById(id).orElse(null));
     }
 }

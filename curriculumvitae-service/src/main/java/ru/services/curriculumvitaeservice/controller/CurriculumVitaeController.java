@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.services.curriculumvitaeservice.client.CountryServiceClient;
+import ru.services.curriculumvitaeservice.client.CountryServiceFeignClient;
 import ru.services.curriculumvitaeservice.dto.CountryResponseDto;
 import ru.services.curriculumvitaeservice.dto.CurriculumVitaeRequestDto;
 import ru.services.curriculumvitaeservice.dto.CurriculumVitaeResponseDto;
@@ -17,21 +17,20 @@ import ru.services.curriculumvitaeservice.service.CurriculumVitaeService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/curriculumvitae")
+@RequestMapping("/cvs")
 public class CurriculumVitaeController {
     private final CurriculumVitaeService curriculumVitaeService;
-    private final CountryServiceClient countryServiceClient;
+    private final CountryServiceFeignClient countryServiceFeignClient;
 
     @GetMapping("/{id}")
-    ResponseEntity<CurriculumVitaeResponseDto> getById(@PathVariable(name = "id") String id) {
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = curriculumVitaeService.getCvOfUser(id);
+    ResponseEntity<CurriculumVitaeResponseDto> getById(@PathVariable(name = "id") String uuid) {
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = curriculumVitaeService.getCvOfUser(uuid);
         return new ResponseEntity<>(curriculumVitaeResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/country")
-    ResponseEntity<CountryResponseDto> getByCountryId(@PathVariable(name = "id") String id) {
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = curriculumVitaeService.getCvOfUser(id);
-        CountryResponseDto countryResponseDto = countryServiceClient.getCountry(curriculumVitaeResponseDto.country_id());
+    @GetMapping("/country/{id}")
+    ResponseEntity<CountryResponseDto> getByCountryId(@PathVariable(name = "id") Long id) {
+        CountryResponseDto countryResponseDto = countryServiceFeignClient.getCountry(id);
         return new ResponseEntity<>(countryResponseDto, HttpStatus.OK);
     }
 

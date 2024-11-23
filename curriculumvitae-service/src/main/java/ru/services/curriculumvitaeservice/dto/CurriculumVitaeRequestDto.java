@@ -1,8 +1,7 @@
 package ru.services.curriculumvitaeservice.dto;
 
-public record CurriculumVitaeRequestDto(String id,
-                                        String name,
+public record CurriculumVitaeRequestDto(String name,
                                         String surname,
-                                        String country_id,
+                                        Long country_id,
                                         String city) {
 }

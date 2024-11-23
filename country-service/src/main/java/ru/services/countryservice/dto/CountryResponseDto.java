@@ -1,6 +1,6 @@
 package ru.services.countryservice.dto;
 
 public record CountryResponseDto(
-        String id,
+        Long id,
         String country_name) {
 }

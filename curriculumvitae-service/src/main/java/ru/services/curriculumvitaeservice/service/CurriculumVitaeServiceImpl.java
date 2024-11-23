@@ -15,15 +15,15 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     private final CurriculumVitaeRepository curriculumVitaeRepository;
     private final CurriculumVitaeMapper curriculumVitaeMapper;
 
+
     @Override
-    public CurriculumVitaeResponseDto getCvOfUser(String id) {
-        return curriculumVitaeMapper.getDtoFromEntity(curriculumVitaeRepository.getCvOfUser(id));
+    public CurriculumVitaeResponseDto getCvOfUser(String uuid) {
+        return curriculumVitaeMapper.getDtoFromEntity(curriculumVitaeRepository.getByUuid(uuid));
     }
 
     @Override
     public CurriculumVitaeResponseDto save(CurriculumVitaeRequestDto curriculumVitaeDto) {
-        String id = curriculumVitaeDto.id();
         CurriculumVitae curriculumVitae = curriculumVitaeMapper.getEntityFromDto(curriculumVitaeDto);
-        return curriculumVitaeMapper.getDtoFromEntity(curriculumVitaeRepository.save(id, curriculumVitae));
+        return curriculumVitaeMapper.getDtoFromEntity(curriculumVitaeRepository.save(curriculumVitae));
     }
 }

@@ -10,7 +10,7 @@ public class CountryServiceClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public CountryResponseDto getCountry(String countryCode) {
+    public CountryResponseDto getCountry(Long countryCode) {
         return restTemplate.getForObject("http://COUNTRY-SERVICE"+"/country/" + countryCode, CountryResponseDto.class);
     }
 }
